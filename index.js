@@ -6,6 +6,7 @@ const User = db.user
 //const Image = db.images
 const fun = require('./encoded/encrypted')
 const http = require('http')
+const ip = require('ip')
 
 const port = normalizePort(process.env.PORT || '3003');
 
@@ -125,6 +126,6 @@ app.post('/login', (req,resp, next) => {
       }
       
 
-app.listen(port, '192.168.2.113', () => {
+app.listen(port, ip.address(), () => {
     console.log('Server run on port ' + port)
 })

@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "ip": "^1.1.5",
     "mysql2": "^1.7.0",
     "sequelize": "^5.18.4",
     "socket.io": "^2.2.0"
