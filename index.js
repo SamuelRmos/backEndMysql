@@ -3,8 +3,15 @@
 const app = require('./app')
 const db = require('./sequelizeConnection')
 const User = db.user
-const Image = db.images
+//const Image = db.images
 const fun = require('./encoded/encrypted')
+const http = require('http')
+
+const port = normalizePort(process.env.PORT || '3003');
+
+app.get('/', (req, res, next) => {
+    res.send('Hello World');
+})
 
 app.post('/register', (req, resp, next) => {
  
@@ -101,6 +108,23 @@ app.post('/login', (req,resp, next) => {
         })
     });
 
-app.listen(3000, () => {
-    console.log('Server run on port 3000')
+    function normalizePort(val) {
+        let port = parseInt(val, 10);
+      
+        if (isNaN(port)) {
+          // named pipe
+          return val;
+        }
+      
+        if (port >= 0) {
+          // port number
+          return port;
+        }
+      
+        return false;
+      }
+      
+
+app.listen(port, '192.168.2.113', () => {
+    console.log('Server run on port ' + port)
 })
