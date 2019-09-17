@@ -7,8 +7,12 @@ const User = db.user
 const fun = require('./encoded/encrypted')
 const http = require('http')
 const ip = require('ip')
+const debug = require('debug')
 
 const port = normalizePort(process.env.PORT || '3003');
+app.set('port', port);
+
+const server = http.createServer(app);
 
 app.get('/', (req, res, next) => {
     res.send('Hello World');
@@ -124,8 +128,42 @@ app.post('/login', (req,resp, next) => {
       
         return false;
       }
-      
 
-app.listen(port, ip.address(), () => {
-    console.log('Server run on port ' + port)
-})
+
+function onError(error) {
+    if (error.syscall !== 'listen') {
+      throw error;
+    }
+  
+    let bind = typeof port === 'string'
+      ? 'Pipe ' + port
+      : 'Port ' + port;
+  
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+      case 'EACCES':
+        console.error(bind + ' requires elevated privileges');
+        process.exit(1);
+        break;
+      case 'EADDRINUSE':
+        console.error(bind + ' is already in use');
+        process.exit(1);
+        break;
+      default:
+        throw error;
+    }
+  }
+
+      function onListening() {
+        const addr = server.address();
+        const bind = typeof addr === 'string'
+          ? 'pipe ' + addr
+          : 'port ' + addr.port;
+        debug('Listening on ' + bind);
+      }
+
+ 
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening); 
+console.log('Server run port: ' + port);    

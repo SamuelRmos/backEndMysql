@@ -9,6 +9,7 @@
   "author": "Samuel Ramos",
   "license": "ISC",
   "dependencies": {
+    "debug": "^4.1.1",
     "express": "^4.17.1",
     "ip": "^1.1.5",
     "mysql2": "^1.7.0",
