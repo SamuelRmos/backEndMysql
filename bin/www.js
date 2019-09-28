@@ -14,7 +14,7 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
-const io = require('socket.io')(server);
+//const io = require('socket.io')(server);
 // const socketServer = require('../socket-server');
 // socketServer.start(io);
 
@@ -22,10 +22,14 @@ const io = require('socket.io')(server);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port,"localhost");
+server.listen(port, "0.0.0.0", () => {
+
+  console.log(`Server running at port ${port}`);
+
+} );
 server.on('error', onError);
 server.on('listening', onListening);
-console.log('Server run port '+ port)
+
 
 /**
  * Normalize a port into a number, string, or false.

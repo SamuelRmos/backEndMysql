@@ -1,11 +1,11 @@
-const express = require('express')
-const bodyParser = require('body-parser')
+const express = require('express');
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const indexRouter = require('./routes/index')
-const flash = require('express-flash')
-const session = require('express-session')
-const app = express()
+const indexRouter = require('./routes/index');
+const flash = require('express-flash');
+const session = require('express-session');
+const app = express();
 
 app.use(cookieParser('secret'))
 app.use(session({
@@ -15,9 +15,9 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(flash())
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(flash());
 app.use(session({secret: 'ssshhhhh',saveUninitialized: true,resave: true}));
 app.use(logger('dev'));
 app.use(express.json());

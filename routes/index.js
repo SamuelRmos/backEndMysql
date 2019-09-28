@@ -1,11 +1,11 @@
 'use strict'
 
-const express = require('express')
-const router = express.Router()
-const db = require('../sequelizeConnection')
-const User = db.user
-const Consulta = db.consulta
-const fun = require('../encoded/encrypted')
+const express = require('express');
+const router = express.Router();
+const db = require('../sequelizeConnection');
+const User = db.user;
+const Consulta = db.consulta;
+const fun = require('../encoded/encrypted');
 
 ///////////////// Registro ////////////////////////
 
@@ -80,17 +80,19 @@ router.post('/login', (req,resp, next) => {
 
             if(user)
             {
-            //   const obj = JSON.stringify(user)
-            //   const jn = JSON.parse(obj)
-            //   resp.json(jn)
+              const obj = JSON.stringify(user)
+              const jn = JSON.parse(obj)
+              resp.json(jn)
 
-                resp.json("Success")
-                console.log('Success')
+                // resp.json("Success")
+                   console.log(jn)
             }
             else
             {
-                resp.json("Error")
-                console.log('Email or Password incorrect')
+                const obj = JSON.stringify("Error")
+                const jn = JSON.parse(obj)
+                resp.json(jn)
+                console.log(jn)
             }
         })
     });
@@ -151,7 +153,7 @@ router.post('/login', (req,resp, next) => {
             });
     });
 
-    module.exports = router
+    module.exports = router;
 
 
 
