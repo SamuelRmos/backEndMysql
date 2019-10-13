@@ -30,7 +30,7 @@ module.exports = (connection, Sequelize) =>{
             field: 'nascimento',
           },
           foto: {
-            type: Sequelize.BLOB,
+            type: Sequelize.TEXT,
             field: 'foto',
           },
         created_at: {

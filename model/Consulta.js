@@ -1,45 +1,50 @@
-const User = require('./User')
-
 module.exports = (connection, Sequelize) => {
 
     const Consulta = connection.define('consultas', {
 
-        id:{
-            type: Sequelize.INTEGER,
-            references:{
-                model: User,
-                key: 'id'
-            },
-            primaryKey: true  
+          idconsulta:{
+            type: Sequelize.INTEGER, 
+            primaryKey: true,
+            autoIncrement: true,
+            field: 'idconsulta',
           },
-          nome_consulta:{
+          especialidade:{
             type: Sequelize.TEXT,
-            field: 'nome_consulta',
-        },
-        horario:{
+            field: 'especialidade',
+            },
+          horario:{
             type: Sequelize.TEXT,
             field: 'horario',
-        },
-        data:{
+          },
+          data:{
             type: Sequelize.TEXT,
             field: 'data',
-        },
-        clinica:{
+          },
+          clinica:{
             type: Sequelize.TEXT,
             field: 'clinica',
-        },
-       created_at: {
-        field: 'created_at',
-        type: Sequelize.DATE
-    } 
-    });
-
-    // User.hasMany(Image, {
-    //     as: 'images',
-    //     foreignKey: 'id'
-    // });
-
-    // Image.belongsTo(User, {foreignKey:'id', constraints:true})
+           },
+          peso:{
+            type: Sequelize.TEXT,
+            field: 'peso',
+           },
+          altura:{
+            type: Sequelize.TEXT,
+            field: 'altura',
+           },
+          nomepaciente:{
+            type: Sequelize.TEXT,
+            field: 'nomepaciente',
+           },
+          medicamentos:{
+            type: Sequelize.TEXT,
+            field: 'medicamentos',
+          },
+          created_at: {
+            field: 'created_at',
+            type: Sequelize.DATE
+         }, 
+      });
 
     return Consulta;
 }

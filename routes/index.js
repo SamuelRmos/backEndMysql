@@ -6,8 +6,12 @@ const db = require('../sequelizeConnection');
 const User = db.user;
 const Consulta = db.consulta;
 const fun = require('../encoded/encrypted');
+const fs = require('fs');
+const multer = require('multer');
+const upload = multer({dest: 'uploads'});
 
-///////////////// Registro ////////////////////////
+
+///////////////// Registro Usuario ////////////////////////
 
 router.post('/register', (req, resp, next) => {
  
@@ -58,7 +62,7 @@ router.post('/register', (req, resp, next) => {
        
 });
 
- ///////////////////////// Login ///////////////////////////
+ ///////////////////////// Login Usuario ///////////////////////////
 
 router.post('/login', (req,resp, next) => {
 
@@ -98,13 +102,13 @@ router.post('/login', (req,resp, next) => {
     });
  //////////////////////////// Busca consulta ///////////////////
 
-    router.get('/busca',(req,res,next) => {
+    router.post('/busca',(req,res,next) => {
       const postData = req.body;
-      const id = postData.id;
+      const nomepaciente = postData.nomepaciente;
       
             Consulta.findAll({
               where:{
-               id:id
+               nomepaciente:nomepaciente
               }       
             })
             .then((consulta) => {
@@ -127,18 +131,24 @@ router.post('/login', (req,resp, next) => {
 
     router.post('/consulta',(req,res,next) => {
       const postData = req.body;
-      const id = postData.id;
-      const nome_consulta = postData.nome_consulta;
-      const horario = postData.horario;
+      const nomepaciente = postData.nomepaciente;
+      const especialidade = postData.especialidade;
       const data = postData.data;
+      const horario = postData.horario;
       const clinica = postData.clinica;
+      const peso = postData.peso;
+      const altura = postData.altura;
+      const medicamentos = postData.medicamentos;
       
             Consulta.create({
-                id: id,
-                nome_consulta: nome_consulta,
+                nomepaciente: nomepaciente,
+                especialidade: especialidade,
                 horario: horario,
                 data: data,
                 clinica: clinica,
+                peso: peso,
+                altura: altura,
+                medicamentos: medicamentos
             })
             .then((consulta) => {
                 if(consulta)
@@ -151,6 +161,23 @@ router.post('/login', (req,resp, next) => {
                     resp.json('Resgistration not success')
                 }
             });
+    });
+
+    ////////////////////////////// Tratamento da imagem /////////////////////
+
+    router.post('/uploadImage', upload.single('image'), function (req, res, next) {
+
+        var tmp_path = req.file.path;
+    
+        var target_path = 'uploads/' + req.file.originalname;
+    
+        /** A better way to copy the uploaded file. **/
+        var src = fs.createReadStream(tmp_path);
+        var dest = fs.createWriteStream(target_path);
+        src.pipe(dest);
+        src.on('end', () => { res.json('complete'); console.log('complete') });
+        src.on('error', (err) => { console.log('error'); });
+        fs.unlink(tmp_path, err => {if(err) console.log(err)});
     });
 
     module.exports = router;
