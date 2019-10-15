@@ -26,14 +26,15 @@ router.post('/register', (req, resp, next) => {
        
         User.findOne({
             where:{
-                email: email
+                email: email,
+                name: name,
             }
         })
         .then(user => {
             if(user)
             {
-                resp.json('Email already exist!')
-                console.log('Email already exist!')
+                resp.json('Email or Username already exist!');
+                console.log('Email or Username user already exist!');
             }
             else
             {
@@ -60,6 +61,50 @@ router.post('/register', (req, resp, next) => {
             }
         });
        
+});
+
+
+///////////////// Confirmar Name e Email disponível ////////////////////////
+
+router.post('/confirm', (req, resp, next) => {
+ 
+    const postData = req.body;
+    const name = postData.name;
+    const email = postData.email;
+   
+    User.findOne({
+        where:{
+            email: email,
+        }
+    })
+    .then(user => {
+        if(user)
+        {
+            resp.json('Email or Username already exist!');
+            console.log('Email or Username user already exist!');
+        }
+        else
+        {
+            User.findOne({
+                where:{
+                    name: name,
+                }
+            })
+            .then(user => {
+                if(user)
+                {
+                    resp.json('Email or Username already exist!');
+                    console.log('Email or Username user already exist!');
+                }
+                else
+                {
+                    resp.json("Success");
+                    console.log("Success");
+                }
+            });
+        }
+    });
+   
 });
 
  ///////////////////////// Login Usuario ///////////////////////////
@@ -178,6 +223,18 @@ router.post('/login', (req,resp, next) => {
         src.on('end', () => { res.json('complete'); console.log('complete') });
         src.on('error', (err) => { console.log('error'); });
         fs.unlink(tmp_path, err => {if(err) console.log(err)});
+    });
+
+    router.get('/image/:path', function (req, res) {
+        var path_image = req.params.path;
+        var src = fs.createReadStream('../bin/uploads/' + path_image);
+        src.on('open', function () {
+            src.pipe(res);
+            console.log('down completed: ' + path_image);
+        });
+        src.on('error', function (err) {
+            console.error('' + err);
+        });
     });
 
     module.exports = router;
