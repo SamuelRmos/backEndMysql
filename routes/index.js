@@ -112,12 +112,12 @@ router.post('/confirm', (req, resp, next) => {
 router.post('/login', (req,resp, next) => {
 
     const postData = req.body;
-    const name = postData.email;
+    const email = postData.email;
     const password = postData.password;
 
     User.findOne({
         where:{
-            name: name,
+            email: email,
             password: password 
             }
         })
